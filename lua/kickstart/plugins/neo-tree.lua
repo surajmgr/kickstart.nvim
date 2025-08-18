@@ -22,5 +22,6 @@ return {
         },
       },
     },
+    auto_session = true, -- Enable auto session management
   },
 }
