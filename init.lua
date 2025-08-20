@@ -963,6 +963,21 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true, -- auto-jump to next object
+          keymaps = {
+            -- JSX fragments
+            ['af'] = '@jsx_fragment.outer',
+            ['if'] = '@jsx_fragment.inner',
+
+            -- Regular tags (e.g. <div>...</div>)
+            ['at'] = '@tag.outer',
+            ['it'] = '@tag.inner',
+          },
+        },
+      },
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
