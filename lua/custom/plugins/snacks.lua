@@ -117,6 +117,14 @@ return {
       end,
       desc = 'File Explorer',
     },
+    {
+      '\\',
+      function()
+        Snacks.explorer()
+      end,
+      desc = 'File Explorer',
+      mode = { 'n', 'v' },
+    },
     -- find
     {
       '<leader>fb',
