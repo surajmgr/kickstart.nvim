@@ -18,4 +18,10 @@ map('n', '<leader>St', ':SessionToggleAutoSave<CR>', { desc = '[S]ession [T]oggl
 map('n', '<leader>Sp', ':SessionPurgeOrphaned<CR>', { desc = '[S]ession [P]urge Orphaned' })
 map('n', '<leader>Sa', ':SessionSearch<CR>', { desc = '[S]ession [A]ll Search Picker' })
 
+-- Noice commands
+map('n', '<leader>nd', ':NoiceDismiss<CR>', { desc = '[N]oise [D]ismiss' })
+map('n', '<leader>nD', ':NoiceDismissAll<CR>', { desc = '[N]oise [D]ismiss [A]ll' })
+map('n', '<leader>nS', ':NoiceToggle<CR>', { desc = '[N]oise [S]tatus' })
+map('n', '<leader>nH', ':NoiceHistory<CR>', { desc = '[N]oise [H]istory' })
+
 return {}
