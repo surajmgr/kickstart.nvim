@@ -24,4 +24,10 @@ map('n', '<leader>nD', ':NoiceDismissAll<CR>', { desc = '[N]oise [D]ismiss [A]ll
 map('n', '<leader>nS', ':NoiceToggle<CR>', { desc = '[N]oise [S]tatus' })
 map('n', '<leader>nH', ':NoiceHistory<CR>', { desc = '[N]oise [H]istory' })
 
+-- VSCode like shortcuts
+map('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines down' })
+map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })
+map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move current line down' })
+map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move current line up' })
+
 return {}
