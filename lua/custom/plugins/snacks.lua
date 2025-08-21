@@ -77,6 +77,13 @@ return {
   keys = {
     -- Top Pickers & Explorer
     {
+      '<leader><space>',
+      function()
+        Snacks.picker.files()
+      end,
+      desc = 'Top Pickers',
+    },
+    {
       '<leader>,',
       function()
         Snacks.picker.buffers()
