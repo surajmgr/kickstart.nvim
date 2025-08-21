@@ -18,7 +18,8 @@ return {
           { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
           { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
           { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = ' ', key = 'p', desc = 'Projects', action = ":lua Snacks.dashboard.pick('projects')" },
+          { icon = ' ', key = 'm', desc = 'Marks', action = ":lua Snacks.dashboard.pick('marks')" },
           { icon = ' ', key = 'w', desc = 'Workspaces', action = ':Telescope workspaces' },
           { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
           { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
@@ -76,13 +77,6 @@ return {
   keys = {
     -- Top Pickers & Explorer
     {
-      '<leader><space>',
-      function()
-        Snacks.picker.smart()
-      end,
-      desc = 'Smart Find Files',
-    },
-    {
       '<leader>,',
       function()
         Snacks.picker.buffers()
@@ -90,32 +84,11 @@ return {
       desc = 'Buffers',
     },
     {
-      '<leader>/',
-      function()
-        Snacks.picker.grep()
-      end,
-      desc = 'Grep',
-    },
-    {
       '<leader>:',
       function()
         Snacks.picker.command_history()
       end,
       desc = 'Command History',
-    },
-    {
-      '<leader>n',
-      function()
-        Snacks.picker.notifications()
-      end,
-      desc = 'Notification History',
-    },
-    {
-      '<leader>e',
-      function()
-        Snacks.explorer()
-      end,
-      desc = 'File Explorer',
     },
     {
       '\\',
@@ -168,6 +141,13 @@ return {
       end,
       desc = 'Recent',
     },
+    {
+      '<leader>fs',
+      function()
+        Snacks.picker.smart()
+      end,
+      desc = 'Smart Find Files',
+    },
     -- git
     {
       '<leader>gb',
@@ -210,13 +190,6 @@ return {
         Snacks.picker.git_diff()
       end,
       desc = 'Git Diff (Hunks)',
-    },
-    {
-      '<leader>gf',
-      function()
-        Snacks.picker.git_log_file()
-      end,
-      desc = 'Git Log File',
     },
     -- Grep
     {
@@ -264,27 +237,6 @@ return {
       desc = 'Autocmds',
     },
     {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
-    },
-    {
-      '<leader>sc',
-      function()
-        Snacks.picker.command_history()
-      end,
-      desc = 'Command History',
-    },
-    {
-      '<leader>sC',
-      function()
-        Snacks.picker.commands()
-      end,
-      desc = 'Commands',
-    },
-    {
       '<leader>sd',
       function()
         Snacks.picker.diagnostics()
@@ -297,20 +249,6 @@ return {
         Snacks.picker.diagnostics_buffer()
       end,
       desc = 'Buffer Diagnostics',
-    },
-    {
-      '<leader>sh',
-      function()
-        Snacks.picker.help()
-      end,
-      desc = 'Help Pages',
-    },
-    {
-      '<leader>sH',
-      function()
-        Snacks.picker.highlights()
-      end,
-      desc = 'Highlights',
     },
     {
       '<leader>si',
@@ -391,21 +329,21 @@ return {
     },
     -- LSP
     {
-      'gd',
+      'grd',
       function()
         Snacks.picker.lsp_definitions()
       end,
       desc = 'Goto Definition',
     },
     {
-      'gD',
+      'grD',
       function()
         Snacks.picker.lsp_declarations()
       end,
       desc = 'Goto Declaration',
     },
     {
-      'gref',
+      'grr',
       function()
         Snacks.picker.lsp_references()
       end,
@@ -413,18 +351,25 @@ return {
       desc = 'References',
     },
     {
-      'gI',
+      'gri',
       function()
         Snacks.picker.lsp_implementations()
       end,
       desc = 'Goto Implementation',
     },
     {
-      'gy',
+      'grt',
       function()
         Snacks.picker.lsp_type_definitions()
       end,
-      desc = 'Goto T[y]pe Definition',
+      desc = 'Goto Type Definition',
+    },
+    {
+      'gra',
+      function()
+        Snacks.picker.actions()
+      end,
+      desc = 'LSP Actions',
     },
     {
       '<leader>ss',
@@ -484,7 +429,7 @@ return {
       desc = 'Delete Buffer',
     },
     {
-      '<leader>cR',
+      '<leader>grn',
       function()
         Snacks.rename.rename_file()
       end,
@@ -518,13 +463,6 @@ return {
         Snacks.terminal()
       end,
       desc = 'Toggle Terminal',
-    },
-    {
-      '<c-_>',
-      function()
-        Snacks.terminal()
-      end,
-      desc = 'which_key_ignore',
     },
     {
       ']]',
