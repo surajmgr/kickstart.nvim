@@ -372,13 +372,6 @@ return {
       desc = 'Goto Type Definition',
     },
     {
-      'gra',
-      function()
-        Snacks.picker.actions()
-      end,
-      desc = 'LSP Actions',
-    },
-    {
       '<leader>ss',
       function()
         Snacks.picker.lsp_symbols()
@@ -422,7 +415,7 @@ return {
       desc = 'Select Scratch Buffer',
     },
     {
-      '<leader>n',
+      '<leader>nH',
       function()
         Snacks.notifier.show_history()
       end,
@@ -436,7 +429,7 @@ return {
       desc = 'Delete Buffer',
     },
     {
-      '<leader>grn',
+      'grN',
       function()
         Snacks.rename.rename_file()
       end,
