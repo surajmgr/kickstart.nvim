@@ -125,14 +125,16 @@ local function section_search(args)
   return search ~= '' and ('/' .. search) or ''
 end
 
--- Simplified location (line:col only, no totals)
+-- Simplified location with macro recording status
 local function section_location_simple(args)
   if MiniStatusline.is_truncated(args.trunc_width) then
     return ''
   end
   local line = vim.fn.line '.'
   local col = vim.fn.col '.'
-  return string.format('%d:%d', line, col)
+  local macro = vim.fn.reg_recording()
+  local macro_str = macro ~= '' and (' [REC @' .. macro .. ']') or ''
+  return string.format('%d:%d%s', line, col, macro_str)
 end
 
 -- Winbar content for individual windows - shows unsaved state for specific buffer
