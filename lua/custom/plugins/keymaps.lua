@@ -30,4 +30,7 @@ map('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })
 map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move current line down' })
 map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move current line up' })
 
+-- Terminal
+map('t', '<c-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
 return {}
