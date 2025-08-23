@@ -896,9 +896,31 @@ require('lazy').setup({
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
+        transparent = true,
         styles = {
           comments = { italic = false }, -- Disable italics in comments
+          sidebars = 'transparent',
+          floats = 'transparent',
         },
+        on_colors = function(colors)
+          colors.fg_gutter = '#6c7086'
+        end,
+        on_highlights = function(highlights, colors)
+          highlights.CursorLineNr = { fg = colors.blue, bold = true }
+          highlights.Folded = { fg = colors.fg_gutter, bg = 'NONE', italic = false }
+          highlights.CursorLine = {
+            bg = '#0A0A0A',
+          }
+          highlights.LspReferenceText = {
+            bg = '#222436',
+          }
+          highlights.LspReferenceRead = {
+            bg = '#222436',
+          }
+          highlights.LspReferenceWrite = {
+            bg = '#222436',
+          }
+        end,
       }
 
       -- Load the colorscheme here.
@@ -920,7 +942,9 @@ require('lazy').setup({
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      -- require('mini.ai').setup {
+      --   n_lines = 5000,
+      -- }
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
@@ -951,10 +975,30 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'javascript',
+        'typescript',
+        'tsx',
+        'json',
+        'css',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -965,18 +1009,75 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+
+      -- Text objects for nvim-treesitter-textobjects
       textobjects = {
         select = {
           enable = true,
-          lookahead = true, -- auto-jump to next object
+          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
           keymaps = {
-            -- JSX fragments
-            ['af'] = '@jsx_fragment.outer',
-            ['if'] = '@jsx_fragment.inner',
-
-            -- Regular tags (e.g. <div>...</div>)
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
+            ['ai'] = '@conditional.outer',
+            ['ii'] = '@conditional.inner',
+            ['al'] = '@loop.outer',
+            ['il'] = '@loop.inner',
+            ['ak'] = '@block.outer',
+            ['ik'] = '@block.inner',
+            ['is'] = '@statement.inner',
+            ['as'] = '@statement.outer',
+            ['ad'] = '@comment.outer',
+            ['am'] = '@call.outer',
+            ['im'] = '@call.inner',
+            ['aq'] = '@quote.outer',
+            ['iq'] = '@quote.inner',
             ['at'] = '@tag.outer',
             ['it'] = '@tag.inner',
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
+            [']o'] = '@block.outer',
+            [']s'] = '@statement.outer',
+            [']a'] = '@parameter.outer',
+          },
+          goto_next_end = {
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
+            [']O'] = '@block.outer',
+            [']S'] = '@statement.outer',
+            [']A'] = '@parameter.outer',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
+            ['[o'] = '@block.outer',
+            ['[s'] = '@statement.outer',
+            ['[a'] = '@parameter.outer',
+          },
+          goto_previous_end = {
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
+            ['[O'] = '@block.outer',
+            ['[S'] = '@statement.outer',
+            ['[A'] = '@parameter.outer',
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            [')a'] = '@parameter.inner',
+          },
+          swap_previous = {
+            [')A'] = '@parameter.inner',
           },
         },
       },

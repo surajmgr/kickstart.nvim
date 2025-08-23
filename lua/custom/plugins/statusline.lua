@@ -4,26 +4,26 @@ local statusline = require 'mini.statusline'
 vim.api.nvim_set_hl(0, 'MiniStatuslineSaved', { fg = '#10B981', bg = 'NONE', bold = false })
 vim.api.nvim_set_hl(0, 'MiniStatuslineModified', { fg = '#F59E0B', bg = 'NONE', bold = false })
 vim.api.nvim_set_hl(0, 'MiniStatuslineInactive', { fg = '#6B7280', bg = 'NONE', italic = true })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormal', { fg = '#1F2937', bg = '#E5E7EB', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsert', { fg = '#FFFFFF', bg = '#059669', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisual', { fg = '#FFFFFF', bg = '#7C3AED', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplace', { fg = '#FFFFFF', bg = '#DC2626', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommand', { fg = '#1F2937', bg = '#FCD34D', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeOther', { fg = '#FFFFFF', bg = '#4B5563', bold = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfo', { fg = '#6B7280', bg = 'NONE', italic = false })
-vim.api.nvim_set_hl(0, 'MiniStatuslineFilename', { fg = '#374151', bg = 'NONE', bold = true })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeANormal', { fg = '#1F2937', bg = '#E5E7EB', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeAInsert', { fg = '#FFFFFF', bg = '#059669', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeAVisual', { fg = '#FFFFFF', bg = '#7C3AED', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeAReplace', { fg = '#FFFFFF', bg = '#DC2626', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeACommand', { fg = '#1F2937', bg = '#FCD34D', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeAOther', { fg = '#FFFFFF', bg = '#4B5563', bold = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineDevinfoA', { fg = '#6B7280', bg = '#0A0A0A', italic = false })
+vim.api.nvim_set_hl(0, 'MiniStatuslineFilenameA', { fg = '#6B7280', bg = '#000000', bold = true })
 vim.api.nvim_set_hl(0, 'MiniStatuslineFileinfo', { fg = '#9CA3AF', bg = 'NONE' })
 
 -- Buffer status popup highlight groups
-vim.api.nvim_set_hl(0, 'BufferStatusSaved', { fg = '#10B981', bg = '#F3F4F6', bold = true })
-vim.api.nvim_set_hl(0, 'BufferStatusModified', { fg = '#DC2626', bg = '#F3F4F6', bold = true })
-vim.api.nvim_set_hl(0, 'BufferStatusReadonly', { fg = '#6366F1', bg = '#F3F4F6', bold = true })
-vim.api.nvim_set_hl(0, 'BufferStatusHeader', { fg = '#1F2937', bg = '#E5E7EB', bold = true })
+vim.api.nvim_set_hl(0, 'BufferStatusSaved', { fg = '#10B981', bg = '#F9FAFB', blend = 20, bold = true })
+vim.api.nvim_set_hl(0, 'BufferStatusModified', { fg = '#DC2626', bg = '#FEF2F2', blend = 20, bold = true })
+vim.api.nvim_set_hl(0, 'BufferStatusReadonly', { fg = '#6366F1', bg = '#F0F4FF', blend = 20, bold = true })
+vim.api.nvim_set_hl(0, 'BufferStatusHeader', { fg = '#1F2937', bg = '#F3F4F6', blend = 15, bold = true })
 vim.api.nvim_set_hl(0, 'BufferStatusBorder', { fg = '#9CA3AF', bg = 'NONE' })
 
 -- Striking split window separators
-vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#4B5563', bg = 'NONE', bold = true })
-vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#4B5563', bg = 'NONE', bold = true })
+vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#000000', bg = 'NONE', bold = true })
+vim.api.nvim_set_hl(0, 'VertSplit', { fg = '#000000', bg = 'NONE', bold = true })
 vim.opt.fillchars = {
   vert = '┃', -- Vertical split
   horiz = '━', -- Horizontal split
@@ -37,7 +37,7 @@ vim.opt.fillchars = {
 }
 
 -- Minimalistic mode indicator
-local function section_mode(args)
+local function section_mode()
   local mode_map = {
     ['n'] = 'NOR',
     ['i'] = 'INS',
@@ -62,7 +62,7 @@ local function section_mode(args)
     ['t'] = 'Other',
     ['!'] = 'Other',
   }
-  local hl = 'MiniStatuslineMode' .. (hl_map[mode] or 'Other')
+  local hl = 'MiniStatuslineModeA' .. (hl_map[mode] or 'Other')
   return ' ' .. mode_str .. ' ', hl
 end
 
@@ -76,16 +76,11 @@ local function section_file_status_for_buffer(bufnr, args)
   local buf = bufnr or vim.api.nvim_get_current_buf()
 
   if vim.bo[buf].readonly then
-    return '%#MiniStatuslineDevinfo# [RO]%*'
+    return '%#MiniStatuslineDevinfoA# [RO]%*'
   end
   local status = vim.bo[buf].modified and ' ●' or ''
   local hl = vim.bo[buf].modified and 'MiniStatuslineModified' or 'MiniStatuslineSaved'
   return status ~= '' and ('%#' .. hl .. '#' .. status .. '%*') or ''
-end
-
--- Regular file status for current buffer
-local function section_file_status(args)
-  return section_file_status_for_buffer(nil, args)
 end
 
 -- Clean git section
@@ -151,17 +146,15 @@ local function winbar_content_for_buffer(bufnr, is_active)
 
   -- Get file status for specific buffer
   local file_status = section_file_status_for_buffer(buf, { trunc_width = 80 })
-  local git = section_git { trunc_width = 40 }
 
   -- Use different highlighting based on active state
-  local filename_hl = is_active and 'MiniStatuslineFilename' or 'MiniStatuslineInactive'
-  local git_hl = is_active and 'MiniStatuslineDevinfo' or 'MiniStatuslineInactive'
+  local filename_hl = is_active and 'MiniStatuslineFilenameA' or 'MiniStatuslineInactive'
 
   return MiniStatusline.combine_groups {
     { hl = filename_hl, strings = { ' ' .. name } },
     { hl = 'MiniStatuslineModified', strings = { file_status } }, -- Always use modified color for visibility
     '%=', -- Right align
-    { hl = git_hl, strings = { git } },
+    -- { hl = git_hl, strings = { git } },
     ' ', -- Small padding at the end
   }
 end
@@ -356,7 +349,7 @@ statusline.setup {
   content = {
     -- Global statusline at bottom with straight line design
     active = function()
-      local mode, mode_hl = section_mode { trunc_width = 100 }
+      local mode, mode_hl = section_mode()
       local git = section_git { trunc_width = 60 }
       local diagnostics = section_diagnostics { trunc_width = 80 }
       local lsp = section_lsp { trunc_width = 70 }
@@ -366,9 +359,9 @@ statusline.setup {
 
       return MiniStatusline.combine_groups {
         { hl = mode_hl, strings = { mode } },
-        { hl = 'MiniStatuslineFilename', strings = { filename } },
-        { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics, lsp, search } },
-        '%=', -- Right align - creates the straight line effect
+        { hl = 'MiniStatuslineFilenameA', strings = { filename } },
+        { hl = 'MiniStatuslineDevinfoA', strings = { git, diagnostics, lsp, search } },
+        { hl = 'MiniStatuslineDevinfoA', strings = { '%=' } },
         { hl = mode_hl, strings = { location } },
       }
     end,

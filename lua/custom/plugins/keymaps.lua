@@ -33,4 +33,6 @@ map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move current line up' })
 -- Terminal
 map('t', '<c-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Buffer
+map('n', '<leader>bo', ':%bd|e#<CR>', { desc = 'Single [B]uffer [O]pen' })
 return {}
