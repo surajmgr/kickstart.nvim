@@ -903,10 +903,9 @@ require('lazy').setup({
           floats = 'transparent',
         },
         on_colors = function(colors)
-          colors.fg_gutter = '#6c7086'
+          colors.fg_gutter = '#989C94' -- Set the color for the gutter (line numbers, etc.)
         end,
         on_highlights = function(highlights, colors)
-          highlights.CursorLineNr = { fg = colors.blue, bold = true }
           highlights.Folded = { fg = colors.fg_gutter, bg = 'NONE', italic = false }
           highlights.CursorLine = {
             bg = '#0A0A0A',
@@ -919,6 +918,10 @@ require('lazy').setup({
           }
           highlights.LspReferenceWrite = {
             bg = '#222436',
+          }
+          highlights.Comment = {
+            fg = '#989C94',
+            italic = false, -- Disable italics in comments
           }
         end,
       }
